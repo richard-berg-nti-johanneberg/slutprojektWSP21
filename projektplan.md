@@ -11,7 +11,7 @@ https://gyazo.com/9819c712157c927fc4efbdcf9b4086d5
 https://gyazo.com/155ea36da891662270ae04a3d89181e4
 
 ## 3. Databas med ER-diagram (Bild på ER-diagram).
-https://gyazo.com/ef36f63744615a34f0a3905141c8ba2a
+https://gyazo.com/4913e9eaa0fd3a4514bd6baefa64120a
 
 ## 4. Arkitektur (Beskriv filer och mappar - vad gör/innehåller de?).
 
