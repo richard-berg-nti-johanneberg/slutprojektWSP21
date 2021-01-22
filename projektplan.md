@@ -6,7 +6,7 @@ Gymsida
 Min sida skall vara en hemsida där en user eller PT kan logga in eller registrera sig. Usern ska kunna lägga till workouts till sitt schema som en PT har gjort. Usern ska kunna ta bort sina workouts. PTn ska kunna göra workouts som usern ska kunna använda, även redigera existerande workouts. Usern ska kunna ha många workouts och en workout ska kunna ha många users. En PT ska kunna ha gjort många workouts men workouts ska bara kunna ha en PT.
 ## 2. Vyer (visa bildskisser på dina sidor).
 
-![loggain](loggain.JPG)
+![tid](tid.PNG)
 
 =======
 https://gyazo.com/7b3c5392bb8c1d1836600baff7390700
