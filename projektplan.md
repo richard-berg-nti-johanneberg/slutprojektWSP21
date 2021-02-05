@@ -7,7 +7,7 @@ Min sida skall vara en hemsida där en user eller PT kan logga in eller registre
 ## 2. Vyer (visa bildskisser på dina sidor).
 
 ![tid](tid.PNG)
-
+![ER](ER)
 =======
 https://gyazo.com/7b3c5392bb8c1d1836600baff7390700
 https://gyazo.com/e3f8753a70fe0e67a17efe80174eb233
