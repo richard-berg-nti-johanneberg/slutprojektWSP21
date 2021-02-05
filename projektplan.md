@@ -7,16 +7,17 @@ Min sida skall vara en hemsida där en user eller PT kan logga in eller registre
 ## 2. Vyer (visa bildskisser på dina sidor).
 
 ![tid](tid.PNG)
-![ER](ER)
-=======
-https://gyazo.com/7b3c5392bb8c1d1836600baff7390700
-https://gyazo.com/e3f8753a70fe0e67a17efe80174eb233
-https://gyazo.com/9819c712157c927fc4efbdcf9b4086d5
-https://gyazo.com/155ea36da891662270ae04a3d89181e4
- 73acc4a82a026e9e2ac3a1676a040147bb77493e
+
+![loggain](loggain.PNG)
+
+![schema](schema.PNG)
+
+![program](program.PNG)
+
+![skapa](skapa.PNG)
 
 ## 3. Databas med ER-diagram (Bild på ER-diagram).
-https://gyazo.com/4913e9eaa0fd3a4514bd6baefa64120a
+![ER](ER.PNG)
 
 ## 4. Arkitektur (Beskriv filer och mappar - vad gör/innehåller de?).
 
