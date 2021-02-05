@@ -8,16 +8,16 @@ Min sida skall vara en hemsida där en user eller PT kan logga in eller registre
 
 ![tid](tid.png)
 
-![loggain](loggain.PNG)
+![loggain](loggain.png)
 
-![schema](schema.PNG)
+![schema](schema.png)
 
-![program](program.PNG)
+![program](program.png)
 
-![skapa](skapa.PNG)
+![skapa](skapa.png)
 
 ## 3. Databas med ER-diagram (Bild på ER-diagram).
-![ER](ER.PNG)
+![ER](ER.png)
 
 ## 4. Arkitektur (Beskriv filer och mappar - vad gör/innehåller de?).
 
