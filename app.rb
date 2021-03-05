@@ -2,6 +2,7 @@ require 'sinatra'
 require 'slim'
 require 'sqlite3'
 require 'bcrypt'
+require 'byebug'
 
 enable  :sessions
 
@@ -28,11 +29,7 @@ post('/users/new') do
     password_digest = BCrypt::Password.create(password)
     db = SQLite3::Database.new('db/gym.db')
     db.execute("INSERT INTO users (username,pwdigest,role) VALUES (?,?,?)",username,password_digest,role)
-    if role == 1
-      redirect('/createprograms')
-    else 
-      redirect("/programs")
-    end
+    redirect('/')
 
   else
     "lösenorden matchar inte"
@@ -44,7 +41,13 @@ get("/programs") do
 end
 
 get("/createprograms") do
-  slim(:createprograms)
+  id = session[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.results_as_hash = true
+  result = db.execute("SELECT * FROM exercises WHERE user_id = ?",id)
+  p "alla övningar #{result}"
+
+  slim(:"createprograms", locals:{exercises:result})
 end
 
 
@@ -72,3 +75,14 @@ post('/login') do
   
 end
   
+
+post('/exercises/new') do
+  ovningsnamn = params[:ovningsnamn]
+ 
+  userid = session[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.results_as_hash = true
+  db.execute("INSERT INTO exercises (content, user_id) VALUES (?,?)", ovningsnamn, userid)
+  redirect('/createprograms')
+
+end
