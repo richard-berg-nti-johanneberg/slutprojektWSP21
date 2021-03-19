@@ -121,7 +121,6 @@ end
 
 
 post('/programs/new/') do
-
   name = params[:programname]
   checked = params[:checked]
   userid = session[:id].to_i
@@ -129,6 +128,7 @@ post('/programs/new/') do
   db.results_as_hash = true
   # db.execute("INSERT INTO programs (name, user_id) VALUES (?,?)", name, userid)
   p "#{checked}"
+
   redirect('/createprograms')
 end
 
