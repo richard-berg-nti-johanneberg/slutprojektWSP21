@@ -2,8 +2,7 @@ script src="/script.js"
 link rel="stylesheet" href="/css/style.css"
 h1 Fitnezz
 p här kan du som PT skapa program för användare att använda. Du kan redigera programmen samt ta bort dem. OBS! om du ändrar kommer även användarnas ändras.
-
-
+p hej #{username}
 p skapa först övningar, som du sedan gör ett program utav 
 
 p skapa övningar här
@@ -13,23 +12,26 @@ form action="exercises/new" method="POST"
     input type="submit" value="lägg till övning"
 
 
-p här är övningarna du skapat 
+h3 här är övningarna du skapat 
 
 - exercises.each do |exercise|
     ul
         li = exercise["content"]
         form action="/exercises/#{exercise["id"]}/delete" method="post"
             input type="submit" value="ta bort övning"'
-        form action="exercises/new" method="post"
-            input type="submit" value="uppdatera övning"'
+        a href="/exercises/#{exercise["id"]}/edit" uppdatera
 
     
-p här skapar du ett program av dina övningar
-form action="/programs/new/" method="post"
+h3 här skapar du ett program av dina övningar
 
-    - exercises.each do |exercise|
+form action="/programs/new/" method="post"
+    input type="text" name="programname" placeholder="skriv programmets namn"
+    - exercises.each do |exercise|  
       ul
         li = exercise["content"]
-        input type="checkbox" name="inkluderas" value="1"
+        input type="checkbox" name="checked"
     input type="submit" value="skapa program"
 
+h3 här är programmen du skapat
+
+h5 hejsan

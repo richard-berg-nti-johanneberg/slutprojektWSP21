@@ -37,7 +37,10 @@ post('/users/new') do
 end
 
 get("/programs") do
-  slim(:programs)
+  id = session[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  slim(:"programs", locals:{username:session[:username]})
+
 end
 
 get("/createprograms") do
@@ -45,14 +48,14 @@ get("/createprograms") do
   db = SQLite3::Database.new('db/gym.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM exercises WHERE user_id = ?",id)
-  p "alla övningar #{result}"
 
-  slim(:"createprograms", locals:{exercises:result})
+  slim(:"createprograms", locals:{exercises:result,username:session[:username]})
 end
 
 
 post('/login') do
     username = params[:username]
+    session[:username] = username
     password = params[:password]
     db = SQLite3::Database.new('db/gym.db')
     db.results_as_hash = true
@@ -78,11 +81,54 @@ end
 
 post('/exercises/new') do
   ovningsnamn = params[:ovningsnamn]
- 
   userid = session[:id].to_i
   db = SQLite3::Database.new('db/gym.db')
   db.results_as_hash = true
   db.execute("INSERT INTO exercises (content, user_id) VALUES (?,?)", ovningsnamn, userid)
+
   redirect('/createprograms')
 
 end
+
+post('/exercises/:id/delete') do
+  id = params[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.execute("DELETE FROM exercises WHERE id = ?",id)
+  
+
+  redirect('/createprograms')
+
+end
+
+post('/exercises/:id/update') do
+  id = params[:id].to_i
+  content = params[:content]
+  user_id = params[:user_id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.execute("UPDATE exercises SET content=?, user_id=? WHERE id =?",content, user_id, id)
+
+  redirect('/createprograms')
+end
+
+get('/exercises/:id/edit') do
+  id = params[:id].to_i 
+  db = SQLite3::Database.new('db/gym.db')
+  db.results_as_hash = true
+  result = db.execute("SELECT * FROM exercises WHERE id = ?",id).first
+  slim(:"/edit",locals:{result:result})
+end
+
+
+
+post('/programs/new/') do
+
+  name = params[:programname]
+  checked = params[:checked]
+  userid = session[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.results_as_hash = true
+  # db.execute("INSERT INTO programs (name, user_id) VALUES (?,?)", name, userid)
+  p "#{checked}"
+  redirect('/createprograms')
+end
+
