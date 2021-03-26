@@ -18,6 +18,9 @@ get("/register") do
     slim(:register)
 end
 
+get("/editprograms") do
+  slim(:editprograms)
+end
 
 post('/users/new') do
   username = params[:username]
@@ -48,8 +51,9 @@ get("/createprograms") do
   db = SQLite3::Database.new('db/gym.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM exercises WHERE user_id = ?",id)
+  result2 = db.execute("SELECT * FROM programs WHERE user_id = ?",id)
 
-  slim(:"createprograms", locals:{exercises:result,username:session[:username]})
+  slim(:"createprograms", locals:{exercises:result,username:session[:username],programname:result2})
 end
 
 
@@ -94,8 +98,15 @@ post('/exercises/:id/delete') do
   id = params[:id].to_i
   db = SQLite3::Database.new('db/gym.db')
   db.execute("DELETE FROM exercises WHERE id = ?",id)
-  
 
+  redirect('/createprograms')
+
+end
+
+post('/programs/:id/delete') do
+  id = params[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.execute("DELETE FROM programs WHERE id = ?",id)
   redirect('/createprograms')
 
 end
@@ -122,13 +133,24 @@ end
 
 post('/programs/new/') do
   name = params[:programname]
-  checked = params[:checked]
+  session[:programname] = name
   userid = session[:id].to_i
   db = SQLite3::Database.new('db/gym.db')
   db.results_as_hash = true
-  # db.execute("INSERT INTO programs (name, user_id) VALUES (?,?)", name, userid)
-  p "#{checked}"
+  db.execute("INSERT INTO programs (name, user_id) VALUES (?,?)", name, userid)
+  
 
   redirect('/createprograms')
 end
 
+post('/programs/update/') do
+ovning = params[:ovning]
+program = params[:program]
+db = SQLite3::Database.new('db/gym.db')
+db.results_as_hash = true
+db.execute("INSERT INTO exercises_programs_relation (exercises_id, programs_id) VALUES (?,?)", ovning, program)
+
+
+redirect('/createprograms')
+
+end

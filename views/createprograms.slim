@@ -5,7 +5,7 @@ p här kan du som PT skapa program för användare att använda. Du kan redigera
 p hej #{username}
 p skapa först övningar, som du sedan gör ett program utav 
 
-p skapa övningar här
+h3 skapa övningar här
 form action="exercises/new" method="POST"
     input type="text" name="ovningsnamn" placeholder="övningensnamn"
     
@@ -22,15 +22,52 @@ h3 här är övningarna du skapat
         a href="/exercises/#{exercise["id"]}/edit" uppdatera
 
     
-h3 här skapar du ett program av dina övningar
+h3 här skapar du ett program 
 
-form action="/programs/new/" method="post"
+form action="programs/new/" method="post"
     input type="text" name="programname" placeholder="skriv programmets namn"
-    - exercises.each do |exercise|  
-      ul
-        li = exercise["content"]
-        input type="checkbox" name="checked"
     input type="submit" value="skapa program"
 
-h3 här är programmen du skapat
 
+
+h3 här är programmen du skapat
+a href="/editprograms" länk till programmen
+
+
+- programname.each do |program|  
+      ul
+        li = program["name"]
+        form action="/programs/#{program["id"]}/delete" method="post"
+            input type="submit" value="ta bort program"'
+        
+
+
+
+
+h3 välj vilken övning du vill lägga till i programmet
+
+form action="/programs/update/" method="post"
+    h4 välj övning
+    select name="ovning"
+        - exercises.each do |exercise|
+            <option value="#{exercise['id']}"> #{exercise["content"]}
+    
+    h4 välj program
+    select name="program"
+        - programname.each do |program|
+            <option value="#{program['id']}"> #{program["name"]}
+
+
+    input type="submit" value="lägg till övning i program"'
+
+
+
+
+
+
+
+
+
+
+
+h3 aaaa
