@@ -19,7 +19,27 @@ get("/register") do
 end
 
 get("/editprograms") do
-  slim(:editprograms)
+  id = session[:id].to_i
+  db = SQLite3::Database.new('db/gym.db')
+  db.results_as_hash = true
+  result = db.execute("SELECT * FROM programs WHERE user_id = ?",id)
+  p result
+  ovningar_id = []
+  result.each do |program|
+    ovningar_id << db.execute("SELECT * FROM exercises_programs_relation WHERE programs_id = ?", program["id"])
+  end
+  p ovningar_id
+  ovningar = [] 
+
+  ovningar_id[0].each do |id| 
+    p id
+    p db.execute("SELECT content FROM exercises WHERE id = ?", id['exercises_id'])
+    # p db.execute("SELECT programs_id FROM exercises_programs_relation WHERE exercises_id = ?", id)
+    ovningar << [db.execute("SELECT content FROM exercises WHERE id = ?", id['exercises_id']), db.execute("SELECT programs_id FROM exercises_programs_relation WHERE exercises_id = ?", id['exercises_id'])]
+  end
+  p ovningar[0]
+
+  slim(:editprograms,locals:{result:result,ovningar:ovningar})
 end
 
 post('/users/new') do
