@@ -1,6 +1,7 @@
 script src="/script.js"
 link rel="stylesheet" href="/css/style.css"
 h1 Fitnezz
+a href="/programs" länk till första sidan
 p här kan du som PT skapa program för användare att använda. Du kan redigera programmen samt ta bort dem. OBS! om du ändrar kommer även användarnas ändras.
 p hej #{username}
 p skapa först övningar, som du sedan gör ett program utav 
@@ -16,7 +17,7 @@ h3 här är övningarna du skapat
 
 - exercises.each do |exercise|
     ul
-        li = exercise["content"]
+        li = exercise["name"]
         form action="/exercises/#{exercise["id"]}/delete" method="post"
             input type="submit" value="ta bort övning"'
         a href="/exercises/#{exercise["id"]}/edit" uppdatera
@@ -24,21 +25,23 @@ h3 här är övningarna du skapat
     
 h3 här skapar du ett program 
 
-form action="programs/new/" method="post"
+form action="/programs/new/" method="post"
     input type="text" name="programname" placeholder="skriv programmets namn"
     input type="submit" value="skapa program"
 
 
 
-h3 här är programmen du skapat
-a href="/editprograms" länk till programmen
 
 
 - programname.each do |program|  
       ul
         li = program["name"]
-        form action="/programs/#{program["id"]}/delete" method="post"
-            input type="submit" value="ta bort program"'
+        a href="/programs/#{program["id"]}/edit" länk till programmet
+
+       
+       
+        / form action="/programs/#{program["id"]}/delete" method="post"
+        /     input type="submit" value="ta bort program"'
         
 
 
@@ -50,7 +53,7 @@ form action="/programs/update/" method="post"
     h4 välj övning
     select name="ovning"
         - exercises.each do |exercise|
-            <option value="#{exercise['id']}"> #{exercise["content"]}
+            <option value="#{exercise['id']}"> #{exercise["name"]}
     
     h4 välj program
     select name="program"

@@ -1,0 +1,18 @@
+h1 Fitnezz
+
+p hej #{username}
+
+p här kan du se en lista på dina träningsprogram, du kan lägga till program som skapats av våra personliga tränare och du kan ta bort program du inte längre använder
+
+
+h3 här är dina tillagda träningsprogram 
+
+
+h3 här finns tillgängliga träningsprogram
+
+
+- programname.each do |program|  
+    ul
+        li = program[2]
+        form action="/programs" method="post"
+            input type="submit" value="lägg till program"'
