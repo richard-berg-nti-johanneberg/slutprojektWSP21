@@ -36,6 +36,8 @@ form action="/programs/new/" method="post"
 - programname.each do |program|  
       ul
         li = program["name"]
+        form action="/exercises/#{program["id"]}/delete" method="post"
+            input type="submit" value="ta bort program"
         a href="/programs/#{program["id"]}/edit" länk till programmet
 
        
@@ -72,5 +74,3 @@ form action="/programs/update/" method="post"
 
 
 
-
-h3 aaaa

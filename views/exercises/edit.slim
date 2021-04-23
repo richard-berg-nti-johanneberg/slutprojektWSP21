@@ -1,4 +1,4 @@
-form action="/exercises/#{result["id"]}/edit" method="post"
-    input type="text" name="name" value="#{result['name']}"
-    input type="hidden" name="user_id" value="#{result['user_id']}"
+form action="/exercises/#{exercise["id"]}/edit" method="post"
+    input type="text" name="name" value="#{exercise['name']}"
+    input type="hidden" name="user_id" value="#{exercise['user_id']}"
     input type="submit" value="Redigera"

@@ -1,3 +1,6 @@
+link rel="stylesheet" href="../css/style.css"
+
+
 h1 Fitnezz
 
 p hej #{username}
@@ -8,11 +11,16 @@ p här kan du se en lista på dina träningsprogram, du kan lägga till program 
 h3 här är dina tillagda träningsprogram 
 
 
+- showprograms.each do |program|
+    ul
+        li =program[0]
+
 h3 här finns tillgängliga träningsprogram
+
 
 
 - programname.each do |program|  
     ul
         li = program[2]
-        form action="/programs" method="post"
-            input type="submit" value="lägg till program"'
+        form action="/programs/#{program[0]}/add" method="post"
+            input type="submit" value="lägg till program"
