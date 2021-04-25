@@ -21,4 +21,8 @@ Min sida skall vara en hemsida där en user eller PT kan logga in eller registre
 
 ## 4. Arkitektur (Beskriv filer och mappar - vad gör/innehåller de?).
 
+första mappen innehåller det som autogenererats av yardoc
 
+andra mappen innehåller databasen
+
+tredje mappen innehåller mer innehåll från autogenerering av yardoc
