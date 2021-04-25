@@ -218,3 +218,4 @@ get('/exercises/:id/edit') do
 end
 
 
+# bundle exec yardoc --plugin yard-sinatra app.rb model.rb

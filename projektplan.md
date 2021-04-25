@@ -26,3 +26,13 @@ första mappen innehåller det som autogenererats av yardoc
 andra mappen innehåller databasen
 
 tredje mappen innehåller mer innehåll från autogenerering av yardoc
+
+fjärde mappen är misc mappen, den innehåller bilder
+
+femte är public mappen, den innehåller en css map som innehåller en css fil
+
+sjätte mappen är views mappen som innehåller alla slimfiler, filerna följer restful routes och det finns mappar specifikt för övningar och program
+
+därefter kommer app.rb, innehåller inte all logik eftersom den mesta koden utförs i model.rb som kommer sedan, utan här är det mest att variablerna kommer in, för att sedan skickas ut
+
+åttonde är model.rb, här hittar vi den mesta logiken som sedan skickar tillbaka resultatet till app.rb
