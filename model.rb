@@ -151,5 +151,11 @@ module Model
         db.execute("INSERT INTO users (username,pwdigest,role) VALUES (?,?,?)",username,password_digest,role)
     end
 
-
+    # hämtar alla program namnen från databasen
+    # @see #connect_to_db
+    def firstpage()
+        db = connect_to_db()
+        programs = db.execute("SELECT name FROM programs")
+        p programs
+    end
 end

@@ -8,16 +8,17 @@ include Model
 enable  :sessions
 
 
-# Visar första sidan
+# Visar första sidan och hämtar alla program
+# @see Model#firstpage
 get("/") do
-  
-  slim(:homepage)
+  programs = firstpage()
+
+  slim(:homepage, locals:{programs:programs})
 end
 
 
 # Tar en till inloggnings slimen
 get("/login") do
-  
   slim(:login)
 end
 
