@@ -57,6 +57,7 @@ module Model
     def delete_exercises(id)
         db = connect_to_db()
         db.execute("DELETE FROM exercises WHERE id = ?",id)
+        db.execute("DELETE FROM exercises_programs_relation where exercises_id =?",id)
     end
 
 
@@ -76,6 +77,9 @@ module Model
     def delete_program(id)
         db = connect_to_db()
         db.execute("DELETE FROM programs WHERE id = ?",id)
+        db.execute("DELETE FROM exercises_programs_relation WHERE programs_id =?",id)
+        db.execute("DELETE FROM programs_users_relation WHERE programs_id =?",id)
+
     end
 
 

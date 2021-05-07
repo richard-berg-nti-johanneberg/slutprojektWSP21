@@ -39,27 +39,31 @@ post('/login') do
   username = params[:username]
   session[:username] = username
   password = params[:password]
+  
+  if !empty(username) && !empty(password)
+    if session[:lastlogin] == nil || Time.now - session[:lastlogin] > 1000
+      user = login(username, password)
+      if user != ""
+        role = user["role"]
+        id = user["id"]
+        session[:id] = id
+        if role == 1
+          redirect('/programs/new')
+        else 
+          redirect("/programs")
+        end
 
-  if session[:lastlogin] == nil || Time.now - session[:lastlogin] > 1000
-    user = login(username, password)
-    if user != ""
-      role = user["role"]
-      id = user["id"]
-      session[:id] = id
-      if role == 1
-        redirect('/programs/new')
-      else 
-        redirect("/programs")
+      else
+        session[:lastlogin] = Time.now
+        "fel lösenord"
       end
-
     else
-      session[:lastlogin] = Time.now
-      "fel lösenord"
+      "Try again in a couple of seconds"
     end
-
   else
-    "Try again in a couple of seconds"
+    "du måste fylla i luckorna"
   end
+
 end
 
 
@@ -74,12 +78,16 @@ post('/users/new') do
   password_confirm = params[:password_confirm]
   role = params[:PT]
 
-  if password == password_confirm
-    register(username,password,role)
-    redirect('/')
+  if !empty(username) && !empty(password) && !empty(password_confirm)
+    if password == password_confirm
+      register(username,password,role)
+      redirect('/')
 
+    else
+      "lösenorden matchar inte"
+    end
   else
-    "lösenorden matchar inte"
+    "du måste fylla i luckorna"
   end
 end
 
@@ -134,7 +142,7 @@ end
 # @param [String] ovningsnamn namnet på övningen
 # @param [Integer] userid användarens id
 # @see Model#new_exercise
-post('/programs/exercises/new') do
+post('/exercises/new') do
   ovningsnamn = params[:ovningsnamn]
   userid = session[:id].to_i
   new_exercise(ovningsnamn, userid)
@@ -217,5 +225,18 @@ get('/exercises/:id/edit') do
   slim(:"/exercises/edit",locals:{exercise:exercise})
 end
 
+get('/exercises/new') do
+  
+  slim(:"/exercises/new")
+end
+
+
+def empty(string)
+  if string.length() != 0
+    return false
+  else 
+    return true
+  end
+end
 
 # bundle exec yardoc --plugin yard-sinatra app.rb model.rb
