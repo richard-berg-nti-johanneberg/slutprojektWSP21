@@ -75,6 +75,8 @@ module Model
     # @param [Integer] :id id:et på programmet
     # @see #connect_to_db
     def delete_program(id)
+        p id
+        p "----------------------------"
         db = connect_to_db()
         db.execute("DELETE FROM programs WHERE id = ?",id)
         db.execute("DELETE FROM exercises_programs_relation WHERE programs_id =?",id)

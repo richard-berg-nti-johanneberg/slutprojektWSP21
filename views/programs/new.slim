@@ -33,7 +33,7 @@ form action="/programs/new/" method="post"
 - programname.each do |program|  
       ul
         a href="/programs/#{program["id"]}/edit" #{program["name"]}
-        form action="/exercises/#{program["id"]}/delete" method="post"
+        form action="/programs/#{program["id"]}/delete" method="post"
             input type="submit" value="ta bort program"
 
 
