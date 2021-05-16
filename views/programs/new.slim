@@ -16,7 +16,9 @@ h3 här är övningarna du skapat
     ul
         li = exercise["name"]
         form action="/exercises/#{exercise["id"]}/delete" method="post"
-            input type="submit" value="ta bort övning"'
+            input type="submit" value="ta bort övning"
+            input type="hidden" name="user_id" value="#{exercise['user_id']}"
+
         a href="/exercises/#{exercise["id"]}/edit" uppdatera
 
     

@@ -1,7 +1,10 @@
 h1 #{program[0]['name']}
 
 
--exercises.each do |element|
-    li = element['name']
-    / form action="/programs/#{exercise["id"]}/delete" method="post"
-    /     input type="submit" value="ta bort övning"'
+-exercises.each do |exercise|
+    li = exercise['name']
+    - if user == exercise['user_id']
+        form action="/exercise_program_relation/#{exercise["id"]}/delete" method="post"
+            input type="submit" value="ta bort övning"
+            input type="hidden" name="user_id" value="#{exercise['user_id']}"
+    

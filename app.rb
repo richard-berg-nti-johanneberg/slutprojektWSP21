@@ -7,6 +7,14 @@ require_relative 'model.rb'
 include Model
 enable  :sessions
 
+before do
+  if session[:id] == nil && (request.path_info != '/') && (request.path_info != '/login') && (request.path_info != '/register')
+    redirect('/')
+  elsif request.path_info == '/programs/new' && session[:role] != 1
+    redirect("/programs")
+  end
+
+end
 
 # Visar första sidan och hämtar alla program
 # @see Model#firstpage
@@ -41,13 +49,13 @@ post('/login') do
   password = params[:password]
   
   if !empty(username) && !empty(password)
-    if session[:lastlogin] == nil || Time.now - session[:lastlogin] > 1000
+    if session[:lastlogin] == nil || Time.now - session[:lastlogin] > 100
       user = login(username, password)
       if user != ""
-        role = user["role"]
+        session[:role] = user["role"]
         id = user["id"]
-        session[:id] = id
-        if role == 1
+        session[:id] = id 
+        if session[:role] == 1
           redirect('/programs/new')
         else 
           redirect("/programs")
@@ -134,7 +142,7 @@ get("/programs/:id/edit") do
   id = params[:id].to_i
   exercises_programs = edit_program(id)
   
-  slim(:"/programs/edit",locals:{exercises:exercises_programs[0],program:exercises_programs[1]})
+  slim(:"/programs/edit",locals:{exercises:exercises_programs[0],program:exercises_programs[1], user:session[:id]})
 end
 
 
@@ -195,10 +203,15 @@ end
 # @param [Integer] :id id:et på övningen
 # @see Model#delete_exercises
 post('/exercises/:id/delete') do
+  user_id = params[:user_id].to_i
+  if session[:id] == user_id 
   id = params[:id].to_i
   delete_exercises(id)
 
   redirect('/programs/new')
+  else
+    "du har inte skapat denna övning och kan därför inte ta bort den"
+  end
 end
 
 
@@ -211,10 +224,14 @@ post('/exercises/:id/edit') do
   id = params[:id].to_i
   name = params[:name]
   user_id = params[:user_id].to_i
-  edit_exercises(name, user_id, id)
-
-  redirect('/programs/new')
+  if session[:id] == user_id 
+    edit_exercises(name, user_id, id)
+    redirect('/programs/new')
+  else
+    "du har inte skapat den övning och kan därför inte redigera den"
+  end
 end
+
 
 
 # här är geten som tar dig till den dynamiska routen för att redigera en övning
@@ -241,4 +258,17 @@ def empty(string)
   end
 end
 
+post('/exercise_program_relation/:id/delete') do
+
+  user_id = params[:user_id].to_i
+  if session[:id] == user_id 
+  id = params[:id].to_i
+
+  delete_exercises_relation(id)
+  redirect('programs/new')
+  else
+    "du har inte rättigheter att ta bort denna övning"
+  end
+
+end
 # bundle exec yardoc --plugin yard-sinatra app.rb model.rb

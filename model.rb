@@ -60,6 +60,10 @@ module Model
         db.execute("DELETE FROM exercises_programs_relation where exercises_id =?",id)
     end
 
+    def delete_exercises_relation(id)
+        db = connect_to_db()
+        db.execute("DELETE FROM exercises_programs_relation where exercises_id =?",id)
+    end
 
     #funktionen skapar ett nytt program, namnet och id:et går in i program tabellen
     # @param [String] name namnet på övningen
@@ -75,8 +79,6 @@ module Model
     # @param [Integer] :id id:et på programmet
     # @see #connect_to_db
     def delete_program(id)
-        p id
-        p "----------------------------"
         db = connect_to_db()
         db.execute("DELETE FROM programs WHERE id = ?",id)
         db.execute("DELETE FROM exercises_programs_relation WHERE programs_id =?",id)
@@ -90,7 +92,7 @@ module Model
     # @see #connect_to_db
     def edit_program(id)
         db = connect_to_db()
-        exercises = db.execute("SELECT exercises.name FROM exercises_programs_relation INNER JOIN exercises ON exercises_programs_relation.exercises_id = exercises.id WHERE programs_id = ?",id)
+        exercises = db.execute("SELECT * FROM exercises_programs_relation INNER JOIN exercises ON exercises_programs_relation.exercises_id = exercises.id WHERE programs_id = ?",id)
         program = db.execute("SELECT name FROM programs WHERE id = ?", id)
 
         return [exercises,program]

@@ -21,6 +21,7 @@ h3 här finns tillgängliga träningsprogram
 
 - programname.each do |program|  
     ul
-        li = program[2]
+        a href="/programs/#{program["id"]}/edit" #{program["name"]}
         form action="/programs/#{program[0]}/add" method="post"
+        
             input type="submit" value="lägg till program"
