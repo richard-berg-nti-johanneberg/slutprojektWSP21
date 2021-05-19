@@ -164,8 +164,7 @@ end
 # @see Model#delete_program
 post('/programs/:id/delete') do
   id = params[:id].to_i
-  p "---------------------------"
-  p id
+ 
   delete_program(id)
 
   redirect('/programs/new')

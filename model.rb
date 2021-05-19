@@ -164,6 +164,5 @@ module Model
     def firstpage()
         db = connect_to_db()
         programs = db.execute("SELECT name FROM programs")
-        p programs
     end
 end
