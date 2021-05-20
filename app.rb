@@ -8,7 +8,7 @@ include Model
 enable  :sessions
 
 before do
-  if session[:id] == nil && (request.path_info != '/') && (request.path_info != '/login') && (request.path_info != '/register')
+  if session[:id] == nil && (request.path_info != '/') && (request.path_info != '/login') && (request.path_info != '/register') && (request.path_info != '/users/new')
     redirect('/')
   elsif request.path_info == '/programs/new' && session[:role] != 1
     redirect("/programs")
@@ -20,7 +20,6 @@ end
 # @see Model#firstpage
 get("/") do
   programs = firstpage()
-
   slim(:homepage, locals:{programs:programs})
 end
 
@@ -33,7 +32,6 @@ end
 
 # Tar en till slimen där man registrerar sig
 get("/register") do
-
   slim(:register)
 end
 
@@ -85,7 +83,6 @@ post('/users/new') do
   password = params[:password]
   password_confirm = params[:password_confirm]
   role = params[:PT]
-
   if !empty(username) && !empty(password) && !empty(password_confirm)
     if password == password_confirm
       register(username,password,role)
@@ -106,7 +103,6 @@ end
 get("/programs") do
   id = session[:id].to_i
   name_add_show = programs(id)  
- 
   slim(:"/programs/index", locals:{username:session[:username],programname:name_add_show[0],addedprograms:name_add_show[1],showprograms:name_add_show[2]})
 end
 
@@ -119,7 +115,6 @@ post("/programs/:id/add") do
   program_id = params[:id]
   user_id = session[:id].to_i
   add_programs(program_id, user_id)
-
   redirect("/programs")
 end
 
@@ -129,8 +124,7 @@ end
 # @see Model#programsnew
 get("/programs/new") do
   id = session[:id].to_i
-  exercises_programname =  programsnew(id)
-
+  exercises_programname = programsnew(id)
   slim(:"programs/new", locals:{exercises:exercises_programname[0],username:session[:username],programname:exercises_programname[1]})
 end
 
@@ -141,7 +135,6 @@ end
 get("/programs/:id/edit") do
   id = params[:id].to_i
   exercises_programs = edit_program(id)
-  
   slim(:"/programs/edit",locals:{exercises:exercises_programs[0],program:exercises_programs[1], user:session[:id]})
 end
 
@@ -154,7 +147,6 @@ post('/exercises/new') do
   ovningsnamn = params[:ovningsnamn]
   userid = session[:id].to_i
   new_exercise(ovningsnamn, userid)
-
   redirect('/programs/new')
 end
 
@@ -164,10 +156,13 @@ end
 # @see Model#delete_program
 post('/programs/:id/delete') do
   id = params[:id].to_i
- 
-  delete_program(id)
-
-  redirect('/programs/new')
+  user_id = params[:user_id].to_i
+  if session[:id] == user_id
+    delete_program(id)
+    redirect('/programs/new')
+  else
+    "du äger inte detta program och kan därför inte ta bort det"
+  end
 end
 
 

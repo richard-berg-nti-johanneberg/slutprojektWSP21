@@ -37,6 +37,7 @@ form action="/programs/new/" method="post"
         a href="/programs/#{program["id"]}/edit" #{program["name"]}
         form action="/programs/#{program["id"]}/delete" method="post"
             input type="submit" value="ta bort program"
+            input type="hidden" name="user_id" value="#{program['user_id']}"
 
 
 h3 välj vilken övning du vill lägga till i programmet
